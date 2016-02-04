@@ -1,19 +1,13 @@
+//Right motor A
+//Left motor B
+//Greifarm C
 // Lightsensors: left - 1, middle - 2, right - 3
-//Middle
-#define MWHITE1 50
-#define MWHITE2 70
-#define MBLACK1 25
-#define MBLACK2 45
 //Left
-#define LWHITE1 50
-#define LWHITE2 65
-#define LBLACK1 15
-#define LBLACK2 35
+#define LWHITE1 47//50
+#define LBLACK2 40//35
 //Right
-#define RWHITE1 50
-#define RWHITE2 65
-#define RBLACK1 15
-#define RBLACK2 35
+#define RWHITE1 47
+#define RBLACK2 40
 //Rest
 #define MinRot1 55
 #define MinRot2 -0.3
@@ -22,28 +16,34 @@ task main()
 {
 
 SetSensorLight(IN_1);
-SetSensorLight(IN_2);
+//SetSensorLight(IN_2);
 SetSensorLight(IN_3);
-SetSensorTouch(IN_4);
+SetSensor(IN_4, SENSOR_TOUCH);
 
 	//endless loop
 	while(true)
 	{
+		//int count = 0;
 		//If SENSOR_4sensor is unpressed..
-
-
-			if(SENSOR_1 > RWHITE1 && SENSOR_3 > LWHITE1){
-						//const. speed
-			OnRev(OUT_A, 70);
-      			OnRev(OUT_B, 79);
-      }else if(SENSOR_3 <= LBLACK2){
-			//left
-      OnRev(OUT_A, 65);
-      OnRev(OUT_B, 10);
-      }else if(SENSOR_1 <= RBLACK2){
-			//right
-      OnRev(OUT_B, 55);
-      OnRev(OUT_A, 10);
-      }
-   }
+		//while(count == 0) {
+			if(SENSOR_1 > RWHITE1 && SENSOR_3 > LWHITE1 && SENSOR_4 == 0){
+				//const. speed
+				OnRev(OUT_A, 67);
+      		OnRev(OUT_B, 65);
+      	}else if(SENSOR_3 <= LBLACK2 && SENSOR_4 == 0){
+				//left
+				OnRev(OUT_A, 65);
+				OnRev(OUT_B, 5);
+			}else if(SENSOR_1 <= RBLACK2 && SENSOR_4 == 0){
+				//right
+				OnRev(OUT_B, 65);
+				OnRev(OUT_A, 5);
+			}else if(SENSOR_4 == 1) {
+				RotateMotor(OUT_C,30, -85);
+				Off(OUT_AB);		
+				//count++;
+				break;
+			}
+		//}
+	}
 }

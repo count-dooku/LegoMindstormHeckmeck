@@ -23,11 +23,9 @@ SetSensor(IN_4, SENSOR_TOUCH);
 	//endless loop
 	while(true)
 	{
-		//int count = 0;
-		//If SENSOR_4sensor is unpressed..
-		//while(count == 0) {
+		int count = 0;
 			if(SENSOR_1 > RWHITE1 && SENSOR_3 > LWHITE1 && SENSOR_4 == 0){
-				//const. speed
+				////const. speed
 				OnRev(OUT_A, 67);
       		OnRev(OUT_B, 65);
       	}else if(SENSOR_3 <= LBLACK2 && SENSOR_4 == 0){
@@ -38,12 +36,26 @@ SetSensor(IN_4, SENSOR_TOUCH);
 				//right
 				OnRev(OUT_B, 65);
 				OnRev(OUT_A, 5);
-			}else if(SENSOR_4 == 1) {
-				RotateMotor(OUT_C,30, -85);
-				Off(OUT_AB);		
-				//count++;
-				break;
+			}else if(SENSOR_4 == 1 && count == 0) {
+				//Ball aufnehmen
+				Off(OUT_AB);
+				Wait(500);
+				RotateMotor(OUT_C, 30, -185);
+				Wait(1000);
+				RotateMotor(OUT_AB, 40, 540);
+				Off(OUT_AB);
+				Wait(100);
+				RotateMotor(OUT_A, 40, 360); //Wert anpassen
+				RotateMotor(OUT_B, 40, -360); //Wert anpassen
+				Off(OUT_AB);
+				count++;
+			}else if(SENSOR_4 == 1 && count == 1) {
+				//Ball ablegen
+				Off(OUT_AB);
+				Wait(500);
+				RotateMotor(OUT_C, 30, 185);
+				Off(OUT_C);
+				//Play Imperial March
 			}
-		//}
 	}
 }

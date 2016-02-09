@@ -17,7 +17,6 @@ SetSensor(IN_4, SENSOR_TOUCH);
 	//endless loop
 	while(true)
 	{
-		float count = MotorRotationCount(OUT_C);
 			if(SENSOR_1 > RWHITE1 && SENSOR_3 > LWHITE1 && SENSOR_4 == 0){
 				//const. speed
 				OnRev(OUT_A, 67);
@@ -30,7 +29,7 @@ SetSensor(IN_4, SENSOR_TOUCH);
 				//right
 				OnRev(OUT_B, 65);
 				OnRev(OUT_A, 5);
-			}else if(SENSOR_4 == 1 && count == 0) {
+			}else if(SENSOR_4 == 1 && MotorRotationCount(OUT_C) == 0) {
 				//Ball aufnehmen
 				Off(OUT_AB);
 				Wait(500);
@@ -43,8 +42,7 @@ SetSensor(IN_4, SENSOR_TOUCH);
 				RotateMotor(OUT_A, 40, 500); //Wert anpassen
 				RotateMotor(OUT_B, 40, -500); //Wert anpassen
 				Off(OUT_AB);
-				count++;
-			}else if(SENSOR_4 == 1 && count > 0) {
+			}else if(SENSOR_4 == 1 && MotorRotationCount(OUT_C) < 0) {
 				//Ball ablegen
 				Off(OUT_AB);
 				Wait(500);
@@ -52,6 +50,7 @@ SetSensor(IN_4, SENSOR_TOUCH);
 				Off(OUT_C);
 				//Play Imperial March
 				// http://processors.wiki.ti.com/index.php/Playing_The_Imperial_March
+				break;
 			}
 	}
 }

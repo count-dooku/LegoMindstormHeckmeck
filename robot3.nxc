@@ -3,11 +3,11 @@
 //Greifarm C
 // Lightsensors: left - 1, middle - 2, right - 3
 //Left
-#define LWHITE1 47//50
-#define LBLACK2 40//35
+#define LWHITE1 50//50
+#define LBLACK2 49//35
 //Right
-#define RWHITE1 47
-#define RBLACK2 40
+#define RWHITE1 50
+#define RBLACK2 49
 //main task
 task main()
 {
@@ -20,33 +20,40 @@ SetSensor(IN_4, SENSOR_TOUCH);
 			if(SENSOR_1 > RWHITE1 && SENSOR_3 > LWHITE1 && SENSOR_4 == 0){
 				//const. speed
 				OnRev(OUT_A, 67);
-      		OnRev(OUT_B, 65);
+      				OnRev(OUT_B, 65);
       	}else if(SENSOR_3 <= LBLACK2 && SENSOR_4 == 0){
 				//left
-				OnRev(OUT_A, 65);
-				OnRev(OUT_B, 5);
+				OnRev(OUT_A, 63);
+				OnFwd(OUT_B, 25);
 			}else if(SENSOR_1 <= RBLACK2 && SENSOR_4 == 0){
 				//right
-				OnRev(OUT_B, 65);
-				OnRev(OUT_A, 5);
+				OnRev(OUT_B, 63);
+				OnFwd(OUT_A, 25);
 			}else if(SENSOR_4 == 1 && MotorRotationCount(OUT_C) == 0) {
 				//Ball aufnehmen
 				Off(OUT_AB);
 				Wait(500);
-				RotateMotor(OUT_C, 30, -190);
+				OnRev(OUT_C, 30);
+				Wait(990);
+				//RotateMotor(OUT_C, 25, -220);
 				Off(OUT_C);
-				Wait(1000);
-				RotateMotor(OUT_AB, 40, 540); //zurueck fahren
+				Wait(300);
+				RotateMotor(OUT_AB, 40, 300); //zurueck fahren
 				Off(OUT_AB);
 				Wait(100);
-				RotateMotor(OUT_A, 40, 500); //Wert anpassen
-				RotateMotor(OUT_B, 40, -500); //Wert anpassen
+				OnFwd(OUT_A, 65);
+				OnRev(OUT_B, 65);
+				Wait(1020);
+				/**RotateMotor(OUT_A, 40, 360); //Wert anpassen
+				RotateMotor(OUT_B, 40, -400); //Wert anpassen**/
 				Off(OUT_AB);
 			}else if(SENSOR_4 == 1 && MotorRotationCount(OUT_C) < 0) {
 				//Ball ablegen
 				Off(OUT_AB);
 				Wait(500);
-				RotateMotor(OUT_C, 30, 190);
+				OnFwd(OUT_C, 40);
+				Wait(600);
+				//RotateMotor(OUT_C, 25, 220);
 				Off(OUT_C);
 				//Play Imperial March
 				// http://processors.wiki.ti.com/index.php/Playing_The_Imperial_March
